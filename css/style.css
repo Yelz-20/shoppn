@@ -1,0 +1,91 @@
+:root {
+    --green: #1f5c45;
+    --green-dark: #17452f;
+    --ink: #1d2521;
+    --muted: #5d6963;
+    --line: #d9dfdb;
+    --bg: #f6f8f7;
+    --error: #b3261e;
+    --error-bg: #fbe9e7;
+    --ok-bg: #e4f3ea;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+}
+
+a { color: var(--green); }
+
+.site-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 24px;
+    padding: 12px 24px;
+    background: var(--green);
+    color: #fff;
+}
+.site-header a { color: #fff; }
+.site-header .logo { font-size: 1.4rem; font-weight: 700; text-decoration: none; }
+.site-header nav { margin-left: auto; display: flex; gap: 16px; align-items: center; }
+
+.search { display: flex; gap: 6px; }
+.search input { padding: 8px 10px; border: 0; border-radius: 4px; min-width: 200px; }
+.search button { padding: 8px 14px; border: 0; border-radius: 4px; background: var(--green-dark); color: #fff; cursor: pointer; }
+
+.container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+
+.form-card {
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 28px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+}
+.form-card h1 { margin-top: 0; font-size: 1.5rem; }
+
+.field { margin-bottom: 16px; }
+.field label { display: block; margin-bottom: 4px; font-weight: 600; }
+.field input, .field select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font: inherit;
+    background: #fff;
+}
+.field input:focus, .field select:focus, button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+}
+.hint { display: block; font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+.field-error { display: block; min-height: 1em; font-size: 0.85rem; color: var(--error); margin-top: 4px; }
+
+form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    border: 0;
+    border-radius: 4px;
+    background: var(--green);
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+form button[type="submit"]:hover { background: var(--green-dark); }
+form button[type="submit"]:disabled { opacity: 0.7; cursor: wait; }
+
+.form-note { margin-bottom: 0; text-align: center; color: var(--muted); }
+
+.alert { padding: 12px 14px; border-radius: 4px; margin-bottom: 16px; }
+.alert-error { background: var(--error-bg); color: var(--error); }
+.alert-success { background: var(--ok-bg); color: var(--green-dark); }
+
+.site-footer { text-align: center; padding: 24px; color: var(--muted); border-top: 1px solid var(--line); }
