@@ -5,7 +5,7 @@ define('ROOT_PATH', dirname(__DIR__));
 
 date_default_timezone_set('Africa/Accra');
 
-// Send PHP errors to our own log file instead of printing them on screen
+// Send PHP errors to our own log file instead of printing them on screen , substr($_SERVER['SCRIPT_NAME'], 0, strlen($_SERVER['SCRIPT_NAME']) - strlen($__rel)) . '/'
 ini_set('log_errors', '1');
 ini_set('error_log', ROOT_PATH . '/error/error.log');
 
@@ -15,7 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Figures out the web path to the project root automatically, so links still work whether we're on localhost/shoppn/ or on the live server under /~username/shoppn/
 $__rel = str_replace('\\', '/', substr(realpath($_SERVER['SCRIPT_FILENAME']), strlen(realpath(ROOT_PATH))));
-define('BASE_URL', substr($_SERVER['SCRIPT_NAME'], 0, strlen($_SERVER['SCRIPT_NAME']) - strlen($__rel)) . '/');
+define('BASE_URL', '/shoppn/');
 unset($__rel);
 
 require_once __DIR__ . '/db_class.php';
