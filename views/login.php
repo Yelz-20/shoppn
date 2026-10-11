@@ -1,39 +1,32 @@
 <?php
-// Login form. Same deal as register.php, just displays things.
 require_once __DIR__ . '/../core/core.php';
 
-if (is_logged_in()) {
-    redirect('index.php');
-}
-
-$page_title = 'Login';
 $error = pull_flash('error');
 
 include __DIR__ . '/layout/header.php';
 ?>
+<div class="auth-wrap">
+    <h1>Welcome back</h1>
+    <p class="auth-sub">Log in to your Shoppn account.</p>
 
-<div class="form-card">
-    <h1>Log in</h1>
+    <?php if ($error): ?>
+        <div class="alert error"><?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
 
-    <?php if ($error): ?><div class="alert alert-error"><?= e($error) ?></div><?php endif; ?>
+    <form id="login-form" class="form" action="<?= BASE_URL ?>/actions/login_action.php" method="POST" novalidate>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com">
+        <span class="field-error" id="email-error"></span>
 
-    <form id="login-form" action="../actions/login_action.php" method="POST" novalidate>
-        <div class="field">
-            <label for="login-email">Email</label>
-            <input type="email" id="login-email" name="email">
-            <span class="field-error" id="login-email-error"></span>
-        </div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Your password">
+        <span class="field-error" id="password-error"></span>
 
-        <div class="field">
-            <label for="login-password">Password</label>
-            <input type="password" id="login-password" name="password">
-            <span class="field-error" id="login-password-error"></span>
-        </div>
-
-        <button type="submit" id="login-btn">Log in</button>
+        <button type="submit" id="login-btn">Log In</button>
     </form>
 
-    <p class="form-note">New here? <a href="register.php">Create an account</a></p>
+    <p class="auth-foot">New here? <a href="<?= BASE_URL ?>/views/register.php">Create an account</a></p>
 </div>
 
+<script src="<?= BASE_URL ?>/js/validate.js"></script>
 <?php include __DIR__ . '/layout/footer.php'; ?>

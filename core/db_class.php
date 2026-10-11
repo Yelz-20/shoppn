@@ -1,24 +1,34 @@
 <?php
-// Base class every Model extends. This is the only file that actually opens a connection to MySQL. Everything else just inherits $this->conn.
-class Database {
+// Base class every Model extends.
+// This is the only file that opens a connection to MySQL.
+// Everything else just inherits $this->conn.
 
-    protected $conn; // protected so the Model classes that extend this can use it
+class Database
+{
+    // Protected so Model classes that extend this class can use the connection.
+    protected $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
+        // Load the database credentials from their separate file.
         require_once __DIR__ . '/db_cred.php';
 
         try {
+            // Open the database connection using the stored credentials.
             $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-            // Depending on the PHP version this either sets connect_error or throws straight away, so just handle both
+            // If MySQL reports a connection error, handle it below.
             if ($this->conn->connect_error) {
                 throw new mysqli_sql_exception($this->conn->connect_error);
             }
 
-            $this->conn->set_charset('utf8mb4'); // so names with accents/emoji don't break
+            // Keep text, names, and special characters working correctly.
+            $this->conn->set_charset('utf8mb4');
         } catch (mysqli_sql_exception $ex) {
-            // Don't leak the real DB error to whoever's looking at the page, just log it for us and show something generic
+            // Save the detailed error in the server log.
             error_log('DB connection failed: ' . $ex->getMessage());
+
+            // Show visitors only a safe general message.
             die('Connection failed.');
         }
     }
