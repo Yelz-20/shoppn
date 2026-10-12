@@ -36,6 +36,7 @@
             <?php if (is_admin()): ?>
                 <a href="<?= BASE_URL ?>/views/admin/brand.php">Manage Brands</a>
                 <a href="<?= BASE_URL ?>/views/admin/category.php">Manage Categories</a>
+                <a href="<?= BASE_URL ?>/views/admin/product.php">Manage Products</a>
             <?php endif; ?>
 
             <a href="<?= BASE_URL ?>/logout.php">Logout</a>

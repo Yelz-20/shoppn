@@ -1,5 +1,6 @@
 // Client-side validation for the register and login forms.
 // This is for user experience only; the PHP actions validate again on the server.
+
 document.addEventListener("DOMContentLoaded", function () {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^[0-9+\-\s]{7,15}$/;
@@ -17,12 +18,15 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setLoading(button, text) {
-    button.disabled = true;
-    button.textContent = text;
+    if (button) {
+      button.disabled = true;
+      button.textContent = text;
+    }
   }
 
   // ----- Register form -----
   const registerForm = document.getElementById("register-form");
+
   if (registerForm) {
     registerForm.addEventListener("submit", function (e) {
       clearErrors(registerForm);
@@ -42,10 +46,12 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         valid = false;
       }
+
       if (!emailRegex.test(email)) {
         showError("email-error", "Enter a valid email address.");
         valid = false;
       }
+
       if (!passRegex.test(password) || password.length > 72) {
         showError(
           "password-error",
@@ -53,18 +59,21 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         valid = false;
       }
+
       if (country === "") {
         showError("country-error", "Choose your country.");
         valid = false;
       }
+
       if (city.length < 2) {
         showError("city-error", "Enter your city.");
         valid = false;
       }
+
       if (!phoneRegex.test(contact)) {
         showError(
           "contact-error",
-          "Enter 7 to 15 digits (you can use +, - and spaces).",
+          "Enter 7 to 15 characters using digits, +, - or spaces.",
         );
         valid = false;
       }
@@ -73,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         return;
       }
+
       setLoading(
         document.getElementById("register-btn"),
         "Creating account...",
@@ -82,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ----- Login form -----
   const loginForm = document.getElementById("login-form");
+
   if (loginForm) {
     loginForm.addEventListener("submit", function (e) {
       clearErrors(loginForm);
@@ -94,6 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
         showError("login-email-error", "Enter a valid email address.");
         valid = false;
       }
+
       if (password === "") {
         showError("login-password-error", "Enter your password.");
         valid = false;
@@ -103,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         return;
       }
+
       setLoading(document.getElementById("login-btn"), "Logging in...");
     });
   }
