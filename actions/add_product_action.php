@@ -99,7 +99,7 @@ if (
 }
 
 // Set the destination directory.
-$uploadDir = __DIR__ . '/../images/products/';
+$uploadDir = UPLOAD_DIR;
 
 // Create the destination directory if it does not exist.
 if (!is_dir($uploadDir)) {

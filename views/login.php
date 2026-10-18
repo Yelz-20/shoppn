@@ -28,5 +28,4 @@ include __DIR__ . '/layout/header.php';
     <p class="auth-foot">New here? <a href="<?= BASE_URL ?>/views/register.php">Create an account</a></p>
 </div>
 
-<script src="<?= BASE_URL ?>/js/validate.js"></script>
 <?php include __DIR__ . '/layout/footer.php'; ?>

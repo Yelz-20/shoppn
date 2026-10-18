@@ -104,7 +104,7 @@ include __DIR__ . '/../layout/header.php';
     <?php if ($editing && !empty($editProduct['product_image'])): ?>
         <p>Current image:</p>
         <img
-            src="<?= BASE_URL ?>/images/products/<?= rawurlencode(basename($editProduct['product_image'])) ?>"
+            src="<?= UPLOAD_URL ?>/<?= rawurlencode(basename($editProduct['product_image'])) ?>"
             alt="Current product image"
             style="width:150px;max-height:150px;object-fit:contain;"
         >
@@ -162,7 +162,7 @@ include __DIR__ . '/../layout/header.php';
                 <td>
                     <?php if (!empty($product['product_image'])): ?>
                         <img
-                            src="<?= BASE_URL ?>/images/products/<?= rawurlencode(basename($product['product_image'])) ?>"
+                            src="<?= UPLOAD_URL ?>/<?= rawurlencode(basename($product['product_image'])) ?>"
                             alt="<?= htmlspecialchars($product['product_title']) ?>"
                             style="width:55px;height:55px;object-fit:contain;"
                         >

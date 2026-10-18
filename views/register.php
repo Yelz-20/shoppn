@@ -53,5 +53,4 @@ include __DIR__ . '/layout/header.php';
     <p class="auth-foot">Already have an account? <a href="<?= BASE_URL ?>/views/login.php">Log in</a></p>
 </div>
 
-<script src="<?= BASE_URL ?>/js/validate.js"></script>
 <?php include __DIR__ . '/layout/footer.php'; ?>

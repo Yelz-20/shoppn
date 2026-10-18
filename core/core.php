@@ -7,6 +7,11 @@ date_default_timezone_set('Africa/Accra');
 
 define('BASE_URL', '/~yelsom.sanid/shoppn');
 define('ROOT_PATH', dirname(__DIR__));
+
+// Product images live in public_html/uploads, the folder the server set up
+// as writable by the web server (www-data). shoppn/ itself is not writable.
+define('UPLOAD_DIR', dirname(ROOT_PATH) . '/uploads/');
+define('UPLOAD_URL', dirname(BASE_URL) . '/uploads');
 define('DEBUG', true);
 
 ini_set('log_errors', '1');

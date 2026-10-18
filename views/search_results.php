@@ -39,7 +39,7 @@ include __DIR__ . '/layout/sidebar.php';
 
                 <?php if (!empty($product['product_image'])): ?>
                     <img
-                        src="<?= BASE_URL ?>/images/products/<?= rawurlencode(basename($product['product_image'])) ?>"
+                        src="<?= UPLOAD_URL ?>/<?= rawurlencode(basename($product['product_image'])) ?>"
                         alt="<?= htmlspecialchars($product['product_title']) ?>"
                         loading="lazy"
                         style="width:100%;height:180px;object-fit:contain;"
@@ -60,7 +60,7 @@ include __DIR__ . '/layout/sidebar.php';
                 </p>
 
                 <p>
-                    <a href="<?= BASE_URL ?>/index.php?add_cart=<?= (int)$product['product_id'] ?>">
+                    <a href="<?= BASE_URL ?>/actions/add_to_cart_action.php?add_cart=<?= (int) $product['product_id'] ?>">
                         Add to Cart
                     </a>
                 </p>

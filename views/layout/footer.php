@@ -3,6 +3,6 @@
 <footer class="site-footer">
     <p>&copy; <?= date('Y') ?> Shoppn</p>
 </footer>
-<script src="<?= BASE_URL ?>js/validate.js"></script>
+<script src="<?= BASE_URL ?>/js/validate.js"></script>
 </body>
 </html>

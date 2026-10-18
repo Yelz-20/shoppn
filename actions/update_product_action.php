@@ -63,7 +63,7 @@ if (!$categoryExists || !$brandExists) {
 
 // Default to the existing image.
 $filename = $existing['product_image'];
-$uploadDir = __DIR__ . '/../images/products/';
+$uploadDir = UPLOAD_DIR;
 
 if (
     isset($_FILES['product_image']) &&
