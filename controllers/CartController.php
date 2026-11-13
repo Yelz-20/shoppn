@@ -1,3 +1,4 @@
+
 <?php
 
 require_once __DIR__ . '/../classes/CartClass.php';
@@ -16,17 +17,10 @@ class CartController
         return $this->cart->isInCart($product_id, $ip);
     }
 
-    public function addToCart(
-        $product_id,
-        $qty,
-        $ip,
-        $customer_id = null
-    ) {
+    public function addToCart($product_id, $qty, $ip, $customer_id = null)
+    {
         return $this->cart->addToCart(
-            $product_id,
-            $qty,
-            $ip,
-            $customer_id
+            $product_id, $qty, $ip, $customer_id
         );
     }
 
@@ -52,10 +46,26 @@ class CartController
 
     public function updateQty($product_id, $new_qty, $ip)
     {
-        return $this->cart->updateQty(
-            $product_id,
-            $new_qty,
-            $ip
+        return $this->cart->updateQty($product_id, $new_qty, $ip);
+    }
+
+    public function getCustomerEmail($customer_id)
+    {
+        return $this->cart->getCustomerEmail($customer_id);
+    }
+
+    public function processPayment($customer_id, $ip, $reference, $amount_pesewas)
+    {
+        return $this->cart->processPayment(
+            $customer_id,
+            $ip,
+            $reference,
+            $amount_pesewas
         );
+    }
+
+    public function getOrderById($order_id)
+    {
+        return $this->cart->getOrderById($order_id);
     }
 }

@@ -1,2 +1,7 @@
 core/db_cred.php
 error/error.log
+# Sensitive files
+/core/db_cred.php
+/paystack_config.php
+.env
+.DS_Store

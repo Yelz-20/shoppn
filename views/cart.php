@@ -1,3 +1,4 @@
+
 <?php
 
 require_once __DIR__ . '/../core/core.php';
@@ -18,170 +19,193 @@ include __DIR__ . '/layout/sidebar.php';
 
 ?>
 
-<h1>Shopping Cart</h1>
+<div class="container">
 
-<?php if ($success): ?>
-    <div class="alert success">
-        <?= htmlspecialchars($success) ?>
-    </div>
-<?php endif; ?>
+    <h1>Shopping Cart</h1>
 
-<?php if ($error): ?>
-    <div class="alert error">
-        <?= htmlspecialchars($error) ?>
-    </div>
-<?php endif; ?>
+    <?php if ($success): ?>
+        <div class="alert alert-success">
+            <?= htmlspecialchars($success) ?>
+        </div>
+    <?php endif; ?>
 
-<?php if (empty($items)): ?>
+    <?php if ($error): ?>
+        <div class="alert alert-danger">
+            <?= htmlspecialchars($error) ?>
+        </div>
+    <?php endif; ?>
 
-    <p>Your shopping cart is empty.</p>
+    <?php if (empty($items)): ?>
 
-    <p>
+        <p>Your shopping cart is currently empty.</p>
+
         <a href="<?= BASE_URL ?>/index.php">
             Continue Shopping
         </a>
-    </p>
 
-<?php else: ?>
+    <?php else: ?>
 
-    <form
-        id="cartForm"
-        action="<?= BASE_URL ?>/actions/update_qty_action.php"
-        method="POST"
-    >
+        <!-- Form used for removing selected products -->
+        <form
+            id="remove-selected"
+            method="POST"
+            action="<?= BASE_URL ?>/actions/remove_from_cart_action.php"
+        ></form>
 
-        <div style="overflow-x:auto;">
+        <table class="admin-table">
 
-            <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Remove</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
 
-                <thead>
-                    <tr>
-                        <th>Remove</th>
-                        <th>Product</th>
-                        <th>Image</th>
-                        <th>Unit Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                    </tr>
-                </thead>
-
-                <tbody>
+            <tbody>
 
                 <?php foreach ($items as $item): ?>
 
+                    <?php
+                        $product_id = (int) $item['p_id'];
+                        $quantity = (int) $item['qty'];
+                        $price = (float) $item['product_price'];
+                        $subtotal = $quantity * $price;
+
+                        $update_form_id = 'update-' . $product_id;
+                    ?>
+
                     <tr>
 
+                        <!-- Product removal checkbox -->
                         <td>
                             <input
                                 type="checkbox"
                                 name="remove[]"
-                                value="<?= (int) $item['p_id'] ?>"
-                                form="removeCartForm"
+                                value="<?= $product_id ?>"
+                                form="remove-selected"
                             >
                         </td>
 
-                        <td>
-                            <?= htmlspecialchars($item['product_title']) ?>
-                        </td>
-
+                        <!-- Product details -->
                         <td>
 
                             <?php if (!empty($item['product_image'])): ?>
 
                                 <img
-                                    src="<?= UPLOAD_URL ?>/<?= rawurlencode(basename($item['product_image'])) ?>"
+                                    src="<?= htmlspecialchars($item['product_image']) ?>"
                                     alt="<?= htmlspecialchars($item['product_title']) ?>"
-                                    style="width:70px;height:70px;object-fit:contain;"
+                                    width="60"
+                                    height="60"
+                                    style="object-fit: contain;"
                                 >
 
                             <?php endif; ?>
 
+                            <br>
+
+                            <?= htmlspecialchars($item['product_title']) ?>
+
                         </td>
 
+                        <!-- Product price -->
                         <td>
-                            GHS <?= number_format(
-                                (float) $item['product_price'],
-                                2
-                            ) ?>
+                            GHS <?= number_format($price, 2) ?>
                         </td>
 
+                        <!-- Quantity update form -->
                         <td>
 
-                            <input
-                                type="hidden"
-                                name="update[]"
-                                value="<?= (int) $item['p_id'] ?>"
+                            <form
+                                id="<?= $update_form_id ?>"
+                                method="POST"
+                                action="<?= BASE_URL ?>/actions/update_qty_action.php"
                             >
 
-                            <input
-                                type="number"
-                                name="qty[]"
-                                min="1"
-                                step="1"
-                                required
-                                value="<?= (int) $item['qty'] ?>"
-                                style="width:75px;"
-                            >
+                                <input
+                                    type="hidden"
+                                    name="update[]"
+                                    value="<?= $product_id ?>"
+                                >
+
+                                <input
+                                    type="number"
+                                    name="qty[]"
+                                    value="<?= $quantity ?>"
+                                    min="1"
+                                    required
+                                >
+
+                            </form>
 
                         </td>
 
+                        <!-- Product subtotal -->
                         <td>
-                            GHS <?= number_format(
-                                (int) $item['qty'] *
-                                (float) $item['product_price'],
-                                2
-                            ) ?>
+                            GHS <?= number_format($subtotal, 2) ?>
+                        </td>
+
+                        <!-- Update button -->
+                        <td>
+
+                            <button
+                                type="submit"
+                                form="<?= $update_form_id ?>"
+                            >
+                                Update
+                            </button>
+
                         </td>
 
                     </tr>
 
                 <?php endforeach; ?>
 
-                </tbody>
+            </tbody>
 
-                <tfoot>
+            <tfoot>
 
-                    <tr>
-                        <th colspan="5">Cart Total</th>
+                <tr>
+                    <th colspan="4">Cart Total</th>
 
-                        <th>
-                            GHS <?= number_format($total, 2) ?>
-                        </th>
-                    </tr>
+                    <th colspan="2">
+                        GHS <?= number_format($total, 2) ?>
+                    </th>
+                </tr>
 
-                </tfoot>
+            </tfoot>
 
-            </table>
-
-        </div>
+        </table>
 
         <br>
 
-        <button type="submit">
-            Update Quantities
-        </button>
-
-    </form>
-
-    <form
-        id="removeCartForm"
-        action="<?= BASE_URL ?>/actions/remove_from_cart_action.php"
-        method="POST"
-        style="margin-top:10px;"
-    >
-
-        <button type="submit">
+        <!-- Remove selected products -->
+        <button
+            type="submit"
+            form="remove-selected"
+        >
             Remove Selected Items
         </button>
 
-    </form>
+        <br><br>
 
-    <p>
-        <a href="<?= BASE_URL ?>/index.php">
-            Continue Shopping
-        </a>
-    </p>
+        <p>
+            <a href="<?= BASE_URL ?>/index.php">
+                Continue Shopping
+            </a>
+        </p>
 
-<?php endif; ?>
+        <p>
+            <a href="<?= BASE_URL ?>/views/payment.php">
+                Proceed to Checkout
+            </a>
+        </p>
+
+    <?php endif; ?>
+
+</div>
 
 <?php include __DIR__ . '/layout/footer.php'; ?>
